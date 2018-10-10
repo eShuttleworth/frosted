@@ -106,4 +106,4 @@ venv.bak/
 # other stuff
 *.code-workspace
 out/*
-test/* 
+tests/* 
