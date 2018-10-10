@@ -4,6 +4,9 @@ import hilbert_curve as hc
 
 
 def export_to_png_H(weight_arr, file_out):
+    if file_out[-4:] != '.png':
+        file_out += '.png'
+
     max_w = 255 / max(weight_arr)
     d = ceil(log(len(weight_arr), 2))
     dim = ceil(sqrt(2**d))
