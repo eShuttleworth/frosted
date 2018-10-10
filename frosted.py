@@ -15,7 +15,6 @@ def parse_term():
     return p.parse_args()
 
 
-# dd if=mystery.ubi of=mystery_subset obs=1MB seek=54
 def timer(func):
     @functools.wraps(func)
     def wrapper_timer(*args, **kwargs):
@@ -25,6 +24,7 @@ def timer(func):
         run_time = end_time - start_time
         print('Finished in {} seconds'.format(run_time))
         return val
+
     return wrapper_timer
 
 

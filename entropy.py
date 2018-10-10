@@ -12,8 +12,6 @@ def get_hex_file(fileloc):
 # https://stackoverflow.com/questions/15450192/fastest-way-to-compute-entropy-in-python
 def entropy(labels, base=2):
     """ Computes entropy of label distribution. """
-    # if byte_chunks > 1:
-    #     labels = []
 
     n_labels = len(labels)
 
