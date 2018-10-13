@@ -10,8 +10,8 @@ def parse_term():
     p = argparse.ArgumentParser(description='Frosted file analytics tool.')
     p.add_argument('i', metavar='Input', type=str)
     p.add_argument('-o', metavar='Output', type=str, required=False, help='Output file')
+    p.add_argument('-s', metavar='block_size', default=64, help='Number of bytes to read in a block (default 64)', required=False)
     p.add_argument('-b', action='store_true', required=False, help='Do binwalk analysis on the file')
-    p.add_argument('--BLOCK_SIZE', metavar='block_size', default=64, help='Number of bytes to read in a block', required=False)
     # p.add_argument('')
     return p.parse_args()
 
@@ -36,7 +36,7 @@ def main(args):
     else:
         f = entropy.get_hex_file(args.i)
         print('File read')
-        arr = entropy.file_entropy(list(f), block_size=int(args.BLOCK_SIZE))
+        arr = entropy.file_entropy(list(f), block_size=int(args.s))
         print('Entropy Calculated')
         vis.export(arr, args.o, encoding='h')
 
