@@ -11,6 +11,7 @@ def parse_term():
     p.add_argument('i', metavar='Input', type=str)
     p.add_argument('-o', metavar='Output', type=str, required=False, help='Output file')
     p.add_argument('-b', action='store_true', required=False, help='Do binwalk analysis on the file')
+    p.add_argument('--BLOCK_SIZE', metavar='block_size', default=64, help='Number of bytes to read in a block', required=False)
     # p.add_argument('')
     return p.parse_args()
 
@@ -35,7 +36,7 @@ def main(args):
     else:
         f = entropy.get_hex_file(args.i)
         print('File read')
-        arr = entropy.file_entropy(list(f), block_size=64)
+        arr = entropy.file_entropy(list(f), block_size=int(args.BLOCK_SIZE))
         print('Entropy Calculated')
         vis.export(arr, args.o, encoding='h')
 
