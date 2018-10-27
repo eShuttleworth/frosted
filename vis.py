@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw
 from math import sqrt, ceil, log
 import hilbert_curve as hc
+import matplotlib.pyplot as plt
 
 
 def export_to_png_H(color_arr, file_out):
@@ -64,3 +65,8 @@ def export(weight_arr, file_out, encoding='h'):
     else:
         print('Unexpected encoding encountered; exiting')
         raise Exception()
+
+def plt_export(color_arr):
+    hilberted = []
+
+    

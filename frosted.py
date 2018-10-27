@@ -13,7 +13,8 @@ def parse_term():
     p.add_argument('-s', metavar='block_size', default=64, help='Number of bytes to read in a block (default 64)', required=False)
     p.add_argument('-b', action='store_true', required=False, help='Byte-stain file')
     p.add_argument('-e', action='store_true', required=False, help='Perform entropy analysis')
-    p.add_argument('-d', action='store_true', required=False, help='Display scrolly digraph')
+    p.add_argument('-d', action='store_true', required=False, help='Display scrolly digraph')    
+    p.add_argument('-t', action='store_true', required=False, help='Display scrolly trigraph')
     return p.parse_args()
 
 
@@ -40,19 +41,28 @@ def main(args):
             print('File read')
         arr = analysis.byte_stain(list(f))
         print('Bytes Stained')
-        vis.export(arr, args.o, encoding='h')
+        if args.o:
+            vis.export(arr, args.o, encoding='h')
+        else:
+            vis.plt_export(arr)
     if args.e:
         if not f:
             f = entropy.get_hex_file(args.i)
             print('File read')
         arr = entropy.file_entropy(list(f), block_size=int(args.s))
         print('Entropy Calculated')
-        vis.export(arr, args.o, encoding='h')
+        if args.o:
+            vis.export(arr, args.o, encoding='h')
     if args.d:
         if not f:
             f = entropy.get_hex_file(args.i)
             print('File read')
         analysis.scrolly_digraph(f)
+    if args.t:
+        if not f:
+            f = entropy.get_hex_file(args.i)
+            print('File read')
+        analysis.scrolly_trigraph(f)
          
 
 if __name__ == '__main__':
