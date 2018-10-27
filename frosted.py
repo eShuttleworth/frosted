@@ -53,10 +53,7 @@ def main(args):
             f = entropy.get_hex_file(args.i)
             print('File read')
         analysis.scrolly_digraph(f)
-        
-
-
-
+         
 
 if __name__ == '__main__':
     args = parse_term()

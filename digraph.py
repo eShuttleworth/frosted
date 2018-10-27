@@ -24,5 +24,5 @@ class ScrollyDigraph(object):
 
     def update(self):
         self.im.set_data(self.X[:, :, self.ind])
-        self.ax.set_ylabel('slice starting at  {}'.format(self.ind*1048))
+        self.ax.set_xlabel('slice starting at  {:X}'.format(self.ind*1048))
         self.im.axes.figure.canvas.draw()
