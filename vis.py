@@ -14,13 +14,22 @@ def export_to_png_H(weight_arr, file_out):
     img = Image.new('RGBA', (dim, dim), (0, 0, 0, 255))
     draw = ImageDraw.Draw(img)
 
+    max_x, max_y = 0, 0
     for i in range(len(weight_arr)):
         x, y = hc.d2xy(d, i)
+        max_x = max(max_x, x)
+        max_y = max(max_y, y)
+        if i % 25 == 0:
+            print(max_x, max_y, dim)
         instant_w = ceil(weight_arr[i] * max_w)
         draw.point((x, y), fill=(instant_w, instant_w, instant_w, 255))
 
+    if max_x < dim or max_y < dim:
+        img = img.crop(box=(0, 0, min(max_x, dim), min(max_y, dim)))
+
     print('saving file')
     img.save(file_out, 'PNG')
+    img.show()
 
 
 def export_to_png(weight_arr, file_out, dim=None):
