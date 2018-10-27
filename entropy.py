@@ -1,5 +1,5 @@
 import numpy as np
-from math import log
+from math import log, ceil
 import vis
 
 
@@ -41,17 +41,24 @@ def file_entropy(hex_arr, block_size=16, byte_chunks=1):
             sub = hex_arr[i:]
         else:
             sub = hex_arr[i:i + block_size]
-        # print(entropy(sub))
         entropy_arr.append(entropy(sub))
 
-    return entropy_arr
+    max_w = 255 / max(entropy_arr)
+
+    color_arr = []
+    for i in entropy_arr:
+        # , color_arr[i], color_arr[i], 255
+        color_arr.append((ceil(i * max_w), ceil(i * max_w), ceil(i * max_w), 255))
+
+
+    return color_arr
 
 
 def main():
     hf = get_hex_file('./tests/test')
     file_entropy_array = file_entropy(list(hf), block_size=16)
     # print(file_entropy_array)
-    vis.export_to_png(file_entropy_array)
+    vis.export_to_png(file_entropy_array, './out/test_out.png')
 
 
 if __name__ == '__main__':

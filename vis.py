@@ -3,32 +3,31 @@ from math import sqrt, ceil, log
 import hilbert_curve as hc
 
 
-def export_to_png_H(weight_arr, file_out):
+def export_to_png_H(color_arr, file_out):
     if file_out[-4:] != '.png':
         file_out += '.png'
 
-    max_w = 255 / max(weight_arr)
-    d = ceil(log(len(weight_arr), 2))
+    # max_w = 255 / max(weight_arr)
+    d = ceil(log(len(color_arr), 2))
     dim = ceil(sqrt(2**d))
 
     img = Image.new('RGBA', (dim, dim), (0, 0, 0, 255))
     draw = ImageDraw.Draw(img)
 
     max_x, max_y = 0, 0
-    for i in range(len(weight_arr)):
+    for i in range(len(color_arr)):
         x, y = hc.d2xy(d, i)
         max_x = max(max_x, x)
         max_y = max(max_y, y)
         
-        instant_w = ceil(weight_arr[i] * max_w)
-        draw.point((x, y), fill=(instant_w, instant_w, instant_w, 255))
+        draw.point((x, y), fill=(color_arr[i][0], color_arr[i][1], color_arr[i][2], color_arr[i][3]))
 
     if max_x < dim or max_y < dim:
         img = img.crop(box=(0, 0, min(max_x, dim), min(max_y, dim)))
 
-    print('saving file')
+    print('Saving {}'.format(file_out))
     img.save(file_out, 'PNG')
-    img.show()
+    # img.show()
 
 
 def export_to_png(weight_arr, file_out, dim=None):
