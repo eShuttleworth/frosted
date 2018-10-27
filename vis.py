@@ -19,8 +19,7 @@ def export_to_png_H(weight_arr, file_out):
         x, y = hc.d2xy(d, i)
         max_x = max(max_x, x)
         max_y = max(max_y, y)
-        if i % 25 == 0:
-            print(max_x, max_y, dim)
+        
         instant_w = ceil(weight_arr[i] * max_w)
         draw.point((x, y), fill=(instant_w, instant_w, instant_w, 255))
 
