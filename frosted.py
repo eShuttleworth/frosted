@@ -31,14 +31,14 @@ def timer(func):
 
 @timer
 def main(args):
-    if (args.b):
-        analysis.binwalk_analysis(args.i)
-    else:
-        f = entropy.get_hex_file(args.i)
-        print('File read')
-        arr = entropy.file_entropy(list(f), block_size=int(args.s))
-        print('Entropy Calculated')
-        vis.export(arr, args.o, encoding='h')
+    # if (args.b):
+    #     analysis.binwalk_analysis(args.i)
+    # else:
+    f = entropy.get_hex_file(args.i)
+    print('File read')
+    arr = entropy.file_entropy(list(f), block_size=int(args.s))
+    print('Entropy Calculated')
+    vis.export(arr, args.o, encoding='h')
 
 
 if __name__ == '__main__':

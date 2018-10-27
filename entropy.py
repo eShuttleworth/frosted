@@ -51,7 +51,7 @@ def main():
     hf = get_hex_file('./tests/test')
     file_entropy_array = file_entropy(list(hf), block_size=16)
     # print(file_entropy_array)
-    vis.export_to_png(file_entropy_array)
+    vis.export_to_png(file_entropy_array, './out/test_out.png')
 
 
 if __name__ == '__main__':
