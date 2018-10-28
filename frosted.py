@@ -40,14 +40,20 @@ def main(args):
             print('File read')
         arr = analysis.byte_stain(list(f))
         print('Bytes Stained')
-        vis.export(arr, args.o, encoding='h')
+        if args.o:
+            vis.export(arr, args.o, encoding='h')
+        else:
+            vis.export_plt(arr)
     if args.e:
         if not f:
             f = entropy.get_hex_file(args.i)
             print('File read')
         arr = entropy.file_entropy(list(f), block_size=int(args.s))
         print('Entropy Calculated')
-        vis.export(arr, args.o, encoding='h')
+        if args.o:
+            vis.export(arr, args.o, encoding='h')
+        else:
+            vis.export_plt(arr)
     if args.d:
         if not f:
             f = entropy.get_hex_file(args.i)

@@ -1,13 +1,14 @@
 from PIL import Image, ImageDraw
 from math import sqrt, ceil, log
 import hilbert_curve as hc
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def export_to_png_H(color_arr, file_out):
     if file_out[-4:] != '.png':
         file_out += '.png'
 
-    # max_w = 255 / max(weight_arr)
     d = ceil(log(len(color_arr), 2))
     dim = ceil(sqrt(2**d))
 
@@ -64,3 +65,26 @@ def export(weight_arr, file_out, encoding='h'):
     else:
         print('Unexpected encoding encountered; exiting')
         raise Exception()
+
+def export_plt(color_arr):
+    d = ceil(log(len(color_arr), 2))
+    dim = ceil(sqrt(2**d))
+
+    img = Image.new('RGBA', (dim, dim), (0, 0, 0, 255))
+    draw = ImageDraw.Draw(img)
+
+    max_x, max_y = 0, 0
+    for i in range(len(color_arr)):
+        x, y = hc.d2xy(d, i)
+        max_x = max(max_x, x)
+        max_y = max(max_y, y)
+        
+        draw.point((x, y), fill=(color_arr[i][0], color_arr[i][1], color_arr[i][2], color_arr[i][3]))
+
+    if max_x < dim or max_y < dim:
+        img = img.crop(box=(0, 0, min(max_x, dim), min(max_y, dim)))
+    
+    fig, ax = plt.subplots(1, 1)
+    im = ax.imshow(img)
+
+    plt.show()
