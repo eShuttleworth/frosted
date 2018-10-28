@@ -27,7 +27,6 @@ def export_to_png_H(color_arr, file_out):
 
     print('Saving {}'.format(file_out))
     img.save(file_out, 'PNG')
-    # img.show()
 
 
 def export_to_png(weight_arr, file_out, dim=None):
@@ -76,12 +75,12 @@ def export_plt(color_arr):
         x, y = hc.d2xy(d, i)
         max_x = max(max_x, x)
         max_y = max(max_y, y)
-        
+
         draw.point((x, y), fill=(color_arr[i][0], color_arr[i][1], color_arr[i][2], color_arr[i][3]))
 
     if max_x < dim or max_y < dim:
         img = img.crop(box=(0, 0, min(max_x, dim), min(max_y, dim)))
-    
+
     fig, ax = plt.subplots(1, 1)
     im = ax.imshow(img)
 
@@ -94,6 +93,8 @@ def export_plt(color_arr):
     cid = fig.canvas.mpl_connect('button_press_event', onclick)
 
     plt.show()
+    plt.disconnect(cid)
+    del(im)
 
 
 def export_plt(color_arr, block_size=64):
@@ -108,12 +109,12 @@ def export_plt(color_arr, block_size=64):
         x, y = hc.d2xy(d, i)
         max_x = max(max_x, x)
         max_y = max(max_y, y)
-        
+
         draw.point((x, y), fill=(color_arr[i][0], color_arr[i][1], color_arr[i][2], color_arr[i][3]))
 
     if max_x < dim or max_y < dim:
         img = img.crop(box=(0, 0, min(max_x, dim), min(max_y, dim)))
-    
+
     fig, ax = plt.subplots(1, 1)
     im = ax.imshow(img)
 
@@ -126,3 +127,5 @@ def export_plt(color_arr, block_size=64):
     cid = fig.canvas.mpl_connect('button_press_event', onclick)
 
     plt.show()
+    plt.disconnect(cid)
+    del(im)
