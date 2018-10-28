@@ -76,7 +76,7 @@ def export_plt(color_arr):
         max_x = max(max_x, x)
         max_y = max(max_y, y)
 
-        draw.point((x, y), fill=(color_arr[i][0], color_arr[i][1], color_arr[i][2], color_arr[i][3]))
+        draw.point((x, y), fill=tuple(*color_arr[i]))
 
     if max_x < dim or max_y < dim:
         img = img.crop(box=(0, 0, min(max_x, dim), min(max_y, dim)))
@@ -110,7 +110,7 @@ def export_plt(color_arr, block_size=64):
         max_x = max(max_x, x)
         max_y = max(max_y, y)
 
-        draw.point((x, y), fill=(color_arr[i][0], color_arr[i][1], color_arr[i][2], color_arr[i][3]))
+        draw.point((x, y), fill=tuple(color_arr[i]))
 
     if max_x < dim or max_y < dim:
         img = img.crop(box=(0, 0, min(max_x, dim), min(max_y, dim)))
