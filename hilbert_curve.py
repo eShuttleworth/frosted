@@ -51,7 +51,6 @@ def d2xy(m, d):
         t = t // 4
 
         s = s * 2
-
     return x, y
 
 def xy2d (m, x, y):

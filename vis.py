@@ -2,7 +2,6 @@ from PIL import Image, ImageDraw
 from math import sqrt, ceil, log, floor
 import hilbert_curve as hc
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 def export_to_png_H(color_arr, file_out):
@@ -20,7 +19,7 @@ def export_to_png_H(color_arr, file_out):
         x, y = hc.d2xy(d, i)
         max_x = max(max_x, x)
         max_y = max(max_y, y)
-        
+
         draw.point((x, y), fill=(color_arr[i][0], color_arr[i][1], color_arr[i][2], color_arr[i][3]))
 
     if max_x < dim or max_y < dim:
@@ -57,14 +56,13 @@ def export(weight_arr, file_out, encoding='h'):
     if not file_out:
         file_out = './out/test_out.png'
     if encoding == 'h':
-        # weight_arr, d = hilbertify(weight_arr)
-        # export_to_png(weight_arr, dim=ceil(sqrt(2**d)))
         export_to_png_H(weight_arr, file_out)
     elif encoding == 'l':
         export_to_png(weight_arr, file_out)
     else:
         print('Unexpected encoding encountered; exiting')
         raise Exception()
+
 
 def export_plt(color_arr):
     d = ceil(log(len(color_arr), 2))
@@ -96,6 +94,7 @@ def export_plt(color_arr):
     cid = fig.canvas.mpl_connect('button_press_event', onclick)
 
     plt.show()
+
 
 def export_plt(color_arr, block_size=64):
     d = ceil(log(len(color_arr), 2))

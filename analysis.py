@@ -1,16 +1,16 @@
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-from pprint import pprint
 import numpy as np
 import digraph
 from math import ceil
+
 
 def byte_stain(hex_arr):
     color_arr = []
 
     for i in range(0, len(hex_arr), 2):  # each entry is a nibble
         if i <= len(hex_arr):
-            sub = int('{}{}'.format(*hex_arr[i:i+2]).encode(), base=16)
+            sub = int('{}{}'.format(*hex_arr[i:i + 2]).encode(), base=16)
 
             r = (sub & 7) * 32
             g = ((sub & 56) >> 3) * 32
@@ -18,14 +18,15 @@ def byte_stain(hex_arr):
 
             # print(r, g, b)
             color_arr.append((r, b, g, 255))
-            
+
     return color_arr
+
 
 def bytify(hex_arr):
     byte_arr = []
     for i in range(0, len(hex_arr), 2):
         if i <= len(hex_arr):
-            byte_arr.append(int('{}{}'.format(*hex_arr[i:i+2]).encode(), base=16))
+            byte_arr.append(int('{}{}'.format(*hex_arr[i:i + 2]).encode(), base=16))
     return byte_arr
 
 
@@ -38,7 +39,7 @@ def scrolly_digraph(hex_arr):
             index = depth + i
             if index + 1 >= len(byte_arr):
                 break
-            X[byte_arr[index], byte_arr[index+1], int(depth/1048)] = 1
+            X[byte_arr[index], byte_arr[index + 1], int(depth / 1048)] = 1
 
     fig, ax = plt.subplots(1, 1)
     sd = digraph.ScrollyDigraph(ax, X)
