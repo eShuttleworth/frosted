@@ -38,23 +38,23 @@ def d2xy(m, d):
     t = d
     s = 1
 
-    while (s < n):
+    while s < n:
 
-        rx = ((t // 2) % 2)
+        rx = (t // 2) % 2
         if (rx == 0):
-            ry = (t % 2)
+            ry = t % 2
         else:
-            ry = ((t ^ rx) % 2)
+            ry = (t ^ rx) % 2
         x, y = rot(s, x, y, rx, ry)
         x = x + s * rx
         y = y + s * ry
-        t = (t // 4)
+        t = t // 4
 
         s = s * 2
 
     return x, y
 
-def xy2d ( m, x, y ):
+def xy2d (m, x, y):
 
     """
     ## XY2D converts a 2D Cartesian coordinate to a 1D Hilbert coordinate.
@@ -94,34 +94,29 @@ def xy2d ( m, x, y ):
     d = 0
     n = 2 ** m
 
-    s = ( n // 2 )
+    s = n // 2
 
-    while ( 0 < s ):
-
-        if ( 0 <  ( abs ( xcopy ) & s ) ):
+    while  0 < s:
+        if 0 < (abs(xcopy) & s):
             rx = 1
         else:
             rx = 0
 
-        if ( 0 < ( abs ( ycopy ) & s ) ):
+        if 0 < (abs(ycopy) & s):
             ry = 1
         else:
             ry = 0
 
-        d = d + s * s * ( ( 3 * rx ) ^ ry )
-        
-        xcopy, ycopy = rot ( s, xcopy, ycopy, rx, ry )
-
-        s = ( s // 2 )
-
+        d = d + s * s * ((3 * rx) ^ ry)
+        xcopy, ycopy = rot(s, xcopy, ycopy, rx, ry)
+        s = s // 2
     return d
-
 
 
 # Mostly the original, paired down somewhat (slightly faster, easier to read)
 def rot(n, x, y, rx, ry):
-    if ry == 0:
-        if rx == 1:
+    if not ry:
+        if rx:
             x = n - 1 - x
             y = n - 1 - y
 
