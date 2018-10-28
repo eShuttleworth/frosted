@@ -53,7 +53,7 @@ def main(args):
         if args.o:
             vis.export(arr, args.o, encoding='h')
         else:
-            vis.export_plt(arr)
+            vis.export_plt(arr, block_size=int(args.s))
     if args.d:
         if not f:
             f = entropy.get_hex_file(args.i)

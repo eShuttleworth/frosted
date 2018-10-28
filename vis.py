@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw
-from math import sqrt, ceil, log
+from math import sqrt, ceil, log, floor
 import hilbert_curve as hc
 import matplotlib.pyplot as plt
 import numpy as np
@@ -86,5 +86,44 @@ def export_plt(color_arr):
     
     fig, ax = plt.subplots(1, 1)
     im = ax.imshow(img)
+
+    def onclick(event):
+        try:
+            print('Offset: {:X}'.format(hc.xy2d(d, floor(event.xdata), floor(event.ydata))))
+        except TypeError:
+            pass  # silently disregard typerrors (caused by clicking outside plot)
+
+    cid = fig.canvas.mpl_connect('button_press_event', onclick)
+
+    plt.show()
+
+def export_plt(color_arr, block_size=64):
+    d = ceil(log(len(color_arr), 2))
+    dim = ceil(sqrt(2**d))
+
+    img = Image.new('RGBA', (dim, dim), (0, 0, 0, 255))
+    draw = ImageDraw.Draw(img)
+
+    max_x, max_y = 0, 0
+    for i in range(len(color_arr)):
+        x, y = hc.d2xy(d, i)
+        max_x = max(max_x, x)
+        max_y = max(max_y, y)
+        
+        draw.point((x, y), fill=(color_arr[i][0], color_arr[i][1], color_arr[i][2], color_arr[i][3]))
+
+    if max_x < dim or max_y < dim:
+        img = img.crop(box=(0, 0, min(max_x, dim), min(max_y, dim)))
+    
+    fig, ax = plt.subplots(1, 1)
+    im = ax.imshow(img)
+
+    def onclick(event):
+        try:
+            print('Offset: {:X}'.format(hc.xy2d(d, floor(event.xdata), floor(event.ydata))))
+        except TypeError:
+            pass  # silently disregard typerrors (caused by clicking outside plot)
+
+    cid = fig.canvas.mpl_connect('button_press_event', onclick)
 
     plt.show()

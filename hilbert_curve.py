@@ -54,6 +54,69 @@ def d2xy(m, d):
 
     return x, y
 
+def xy2d ( m, x, y ):
+
+    """
+    ## XY2D converts a 2D Cartesian coordinate to a 1D Hilbert coordinate.
+    #
+    #  Discussion:
+    #
+    #    It is assumed that a square has been divided into an NxN array of cells,
+    #    where N is a power of 2.
+    #
+    #    Cell (0,0) is in the lower left corner, and (N-1,N-1) in the upper 
+    #    right corner.
+    #
+    #  Licensing:
+    #
+    #    This code is distributed under the GNU LGPL license. 
+    #
+    #  Modified:
+    #
+    #    03 January 2016
+    #
+    #  Parameters:
+    #
+    #    Input, integer M, the index of the Hilbert curve.
+    #    The number of cells is N=2^M.
+    #    0 < M.
+    #
+    #    Input, integer X, Y, the Cartesian coordinates of a cell.
+    #    0 <= X, Y < N.
+    #
+    #    Output, integer D, the Hilbert coordinate of the cell.
+    #    0 <= D < N * N.
+    """
+
+    xcopy = x
+    ycopy = y
+
+    d = 0
+    n = 2 ** m
+
+    s = ( n // 2 )
+
+    while ( 0 < s ):
+
+        if ( 0 <  ( abs ( xcopy ) & s ) ):
+            rx = 1
+        else:
+            rx = 0
+
+        if ( 0 < ( abs ( ycopy ) & s ) ):
+            ry = 1
+        else:
+            ry = 0
+
+        d = d + s * s * ( ( 3 * rx ) ^ ry )
+        
+        xcopy, ycopy = rot ( s, xcopy, ycopy, rx, ry )
+
+        s = ( s // 2 )
+
+    return d
+
+
 
 # Mostly the original, paired down somewhat (slightly faster, easier to read)
 def rot(n, x, y, rx, ry):
